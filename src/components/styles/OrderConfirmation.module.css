@@ -2,7 +2,7 @@
   height: 100vh;
   background-color: #fff;
   color: var(--primary-text);
-  display:flex;
+  display: flex;
   justify-content: center;
 }
 .orderContainer {
@@ -46,10 +46,12 @@
   padding-bottom: 30px;
   padding-top: 30px;
 }
-table{
+table {
   width: 85%;
 }
-tr, td, th {
+tr,
+td,
+th {
   text-align: left;
   padding-bottom: 12px;
   /* border:1px solid blue; */
@@ -73,14 +75,14 @@ ul {
 .items {
   display: flex;
   flex-direction: row;
-  gap:20px;
+  gap: 20px;
   padding-top: 7px;
 }
 .progress {
   display: flex;
   flex-direction: column;
   margin-right: 50px;
-  gap:20px;
+  gap: 20px;
   align-items: center;
 }
 img {

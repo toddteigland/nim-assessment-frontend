@@ -7,8 +7,26 @@ function OrderModal({ order, setOrderModal }) {
   const [phone, setPhone] = useState("");
   const [address, setAddress] = useState("");
   const navigate = useNavigate();
-
+  const [isNameValid, setIsNameValid] = useState(true);
+  const [isPhoneValid, setIsPhoneValid] = useState(true);
+  const [isAddressValid, setIsAddressValid] = useState(true);
+  const [errorMessage, setErrorMessage] = useState("");
   const placeOrder = async () => {
+    let valid = true;
+    if (!name) {
+      setIsNameValid(false);
+      valid = false;
+    }
+    if (!phone) {
+      setIsPhoneValid(false);
+      valid = false;
+    }
+    if (!address) {
+      setIsAddressValid(false);
+      valid = false;
+    }
+    if (!valid) return;
+
     const response = await fetch("/api/orders", {
       method: "POST",
       headers: {
@@ -23,9 +41,9 @@ function OrderModal({ order, setOrderModal }) {
     });
     const data = await response.json();
     if (response.status === 200) {
-      navigate(`/order-confirmation/${data.id}`)
+      navigate(`/order-confirmation/${data.id}`);
     } else {
-      console.error('Failed to Place Order', response.status)
+      setErrorMessage("Failed to Place Order, please check form.");
     }
   };
 
@@ -49,9 +67,13 @@ function OrderModal({ order, setOrderModal }) {
           <div className={styles.formGroup}>
             <label htmlFor="name">
               Name
+              {!isNameValid && (
+                <span className={styles.requiredField}>*Required*</span>
+              )}
               <input
                 onChange={(e) => {
                   e.preventDefault();
+                  setIsNameValid(true);
                   setName(e.target.value);
                 }}
                 type="text"
@@ -62,9 +84,13 @@ function OrderModal({ order, setOrderModal }) {
           <div className={styles.formGroup}>
             <label htmlFor="phone">
               Phone
+              {!isPhoneValid && (
+                <span className={styles.requiredField}>*Required*</span>
+              )}
               <input
                 onChange={(e) => {
                   e.preventDefault();
+                  setIsPhoneValid(true);
                   setPhone(e.target.value);
                 }}
                 type="phone"
@@ -75,9 +101,13 @@ function OrderModal({ order, setOrderModal }) {
           <div className={styles.formGroup}>
             <label htmlFor="address">
               Address
+              {!isAddressValid && (
+                <span className={styles.requiredField}>*Required*</span>
+              )}
               <input
                 onChange={(e) => {
                   e.preventDefault();
+                  setIsAddressValid(true);
                   setAddress(e.target.value);
                 }}
                 type="phone"
@@ -102,6 +132,7 @@ function OrderModal({ order, setOrderModal }) {
           >
             Place Order
           </button>
+          {errorMessage && <div className={styles.error}>{errorMessage}</div>}
         </div>
       </div>
     </>

@@ -10,7 +10,6 @@ function OrderConfirmation({ order }) {
     (acc, curr) => acc + curr.item.price * curr.quantity,
     0
   );
-  console.log(order.createdAt.substring(0,10));
 
   return (
     <div className={styles.pageContainer}>
@@ -32,14 +31,22 @@ function OrderConfirmation({ order }) {
           <div className={styles.summary}>
             <table>
               <thead>
-                <th>Order Number:</th>
-                <th>Date:</th>
-                <th>Total:</th>
+                <tr>
+                  <th>Order Number:</th>
+                  <th>Date:</th>
+                  <th>Total:</th>
+                </tr>
               </thead>
               <tbody>
-                <td>{order.id}</td>
-                <td>{order.createdAt.substring(0,10)}</td>
-                <td>${totalPrice}</td>
+                <tr>
+                  <td>{order.id}</td>
+                  <td>
+                    {order.createdAt
+                      ? order.createdAt.substring(0, 10)
+                      : "N/A "}
+                  </td>
+                  <td>${totalPrice}</td>
+                </tr>
               </tbody>
             </table>
           </div>
@@ -61,7 +68,12 @@ function OrderConfirmation({ order }) {
               </div>
               <div className={styles.progress}>
                 <h3>Your order is on its way!</h3>
-                <img src='https://images.unsplash.com/photo-1617347454431-f49d7ff5c3b1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=3215&q=80' alt="Man delivering food on motorcycle" />
+                <img
+                  src="https://images.unsplash.com/photo-1617347454431-f49d7ff5c3b1?ixlib=
+                rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&
+                  fit=crop&w=3215&q=80"
+                  alt="Man delivering food on motorcycle"
+                />
               </div>
             </div>
           </div>
